@@ -37,7 +37,7 @@
 
   // Create chatbot iframe (You can replace this with your chatbot API)
   let iframe = document.createElement("iframe");
-  iframe.src = "https://your-chatbot-url.com"; // Replace with your chatbot URL
+  iframe.src = "https://itsadarsh17.github.io/chatbot-plugin/chatbot.html"; // Replace with your chatbot URL
   iframe.style.cssText = "width: 100%; height: 100%; border: none;";
   
   chatContainer.appendChild(iframe);
