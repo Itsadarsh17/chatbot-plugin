@@ -1,8 +1,8 @@
 (function () {
   class Chatbot {
     constructor(options) {
-      this.apiUrl = options.apiUrl || "https://localhost:3000/api/v1/chat";
-      this.userToken = 'eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJleHAiOjE3Mzk2MDc3NjF9.-mdJz-j99keU2b96KfEmh_H41h5KUnjJxUZpEH1SS5s' || localStorage.getItem("chatbot_token"); // ✅ Allow dynamic token
+      this.apiUrl = options.apiUrl || "https://your-rails-app.com/api/v1/chat";
+      this.userToken = options.token || localStorage.getItem("chatbot_token"); // ✅ Allow dynamic token
       this.theme = options.theme || "#007bff"; // Allow color customization
       this.position = options.position || "bottom-right"; // Allow positioning
       this.init();
