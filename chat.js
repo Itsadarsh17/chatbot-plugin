@@ -10,8 +10,8 @@
     }
 
     init() {
-      if (!this.chatbotToken) {
-        console.error("Chatbot token is required!");
+      if (!this.licenseKey) {  // Changed from this.chatbotToken
+        console.error("License key is required!");
         return;
       }
       this.createChatUI();
@@ -44,10 +44,9 @@
         height: 400px;
         background: white;
         border-radius: 10px;
-        display: none;
+        display: none;  // Remove the duplicate display property
         box-shadow: 0 5px 20px rgba(0,0,0,0.15);
         z-index: 10000;
-        display: flex;
         flex-direction: column;
       `;
 
