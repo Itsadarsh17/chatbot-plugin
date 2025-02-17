@@ -44,9 +44,10 @@
         height: 400px;
         background: white;
         border-radius: 10px;
-        display: none;  // Remove the duplicate display property
+        display: none;
         box-shadow: 0 5px 20px rgba(0,0,0,0.15);
         z-index: 10000;
+        display: flex;
         flex-direction: column;
       `;
 
