@@ -2,7 +2,7 @@
   class Chatbot {
     constructor(options) {
       this.apiUrl = options.apiUrl || "https://your-rails-app.com/api/v1/chat";
-      this.chatbotToken = options.chatbotToken; // Use the chatbot_token from login
+      this.licenseKey = options.licenseKey; // Use license key instead of chatbot token
       this.theme = options.theme || "#007bff";
       this.position = options.position || "bottom-right";
       this.messages = [];
@@ -153,7 +153,7 @@
         const response = await fetch(this.apiUrl, {
           method: "POST",
           headers: {
-            "Authorization": `Bearer ${this.chatbotToken}`,
+             "X-License-Key": this.licenseKey,
             "Content-Type": "application/json"
           },
           body: JSON.stringify({ message })
