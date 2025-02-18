@@ -6,7 +6,7 @@
       this.theme = options.theme || "#007bff";
       this.position = options.position || "bottom-right";
       this.messages = [];
-      this.recaptchaSiteKey = options.recaptchaSiteKey;
+      this.recaptchaSiteKey = "6LfJpNoqAAAAAGR0YuMwuWsbe4lWGLpSYP86FFz2";
       this.init();
     }
 
