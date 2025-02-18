@@ -10,22 +10,23 @@
       this.init();
     }
 
-    init() {
-      if (!this.licenseKey) {
-        console.error("License key is required!");
-        return;
-      }
-       if (!this.recaptchaSiteKey) {
-        console.error("reCAPTCHA site key is required!");
-        return;
-      }
-      const script = document.createElement('script');
-      script.src = `https://www.google.com/recaptcha/api.js?render=${this.recaptchaSiteKey}`;
-      document.head.appendChild(script);
+    async init() {
+  if (!this.licenseKey) {
+    console.error("License key is required!");
+    return;
+  }
+  if (!this.recaptchaSiteKey) {
+    console.error("reCAPTCHA site key is required!");
+    return;
+  }
+  
+  const script = document.createElement('script');
+  script.src = `https://www.google.com/recaptcha/api.js?render=${this.recaptchaSiteKey}`;
+  document.head.appendChild(script);
 
-      await new Promise(resolve => script.onload = resolve);
-      this.createChatUI();
-    }
+  await new Promise(resolve => script.onload = resolve);
+  this.createChatUI();
+}
 
     createChatUI() {
       // Chat button
