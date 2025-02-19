@@ -1,22 +1,26 @@
 (function () {
   class Chatbot {
-    constructor(options) {
-      this.apiUrl = options.apiUrl || "https://your-rails-app.com/api/v1/chat";
+    constructor(options = {}) {
+      // Set default values for apiUrl and recaptchaSiteKey
+      this.apiUrl = "http://localhost:3000/api/v1/chat";
+      this.recaptchaSiteKey = '6LfJpNoqAAAAAGR0YuMwuWsbe4lWGLpSYP86FFz2';
+      
+      // Allow overriding defaults if provided in options
+      if (options.apiUrl) this.apiUrl = options.apiUrl;
+      if (options.recaptchaSiteKey) this.recaptchaSiteKey = options.recaptchaSiteKey;
+      
+      // Other options
       this.licenseKey = options.licenseKey;
       this.theme = options.theme || "#007bff";
       this.position = options.position || "bottom-right";
       this.messages = [];
-      this.recaptchaSiteKey = options.recaptchaSiteKey;
+      
       this.init();
     }
 
     async init() {
       if (!this.licenseKey) {
         console.error("License key is required!");
-        return;
-      }
-      if (!this.recaptchaSiteKey) {
-        console.error("reCAPTCHA site key is required!");
         return;
       }
       
@@ -180,7 +184,6 @@
       this.addMessage(message, false);
 
       try {
-        // Get the reCAPTCHA token right before sending the message
         const token = await this.getRecaptchaToken();
         
         const response = await fetch(this.apiUrl, {
