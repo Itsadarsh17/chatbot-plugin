@@ -11,22 +11,31 @@
     }
 
     async init() {
-  if (!this.licenseKey) {
-    console.error("License key is required!");
-    return;
-  }
-  if (!this.recaptchaSiteKey) {
-    console.error("reCAPTCHA site key is required!");
-    return;
-  }
-  
-  const script = document.createElement('script');
-  script.src = `https://www.google.com/recaptcha/api.js?render=${this.recaptchaSiteKey}`;
-  document.head.appendChild(script);
+      if (!this.licenseKey) {
+        console.error("License key is required!");
+        return;
+      }
+      if (!this.recaptchaSiteKey) {
+        console.error("reCAPTCHA site key is required!");
+        return;
+      }
+      
+      const script = document.createElement('script');
+      script.src = `https://www.google.com/recaptcha/api.js?render=${this.recaptchaSiteKey}`;
+      document.head.appendChild(script);
 
-  await new Promise(resolve => script.onload = resolve);
-  this.createChatUI();
-}
+      // Add style to hide the reCAPTCHA badge
+      const recaptchaStyle = document.createElement("style");
+      recaptchaStyle.textContent = `
+        .grecaptcha-badge { 
+          visibility: hidden;
+        }
+      `;
+      document.head.appendChild(recaptchaStyle);
+
+      await new Promise(resolve => script.onload = resolve);
+      this.createChatUI();
+    }
 
     createChatUI() {
       // Chat button
@@ -155,16 +164,25 @@
       this.messagesContainer.scrollTop = this.messagesContainer.scrollHeight;
     }
 
+    async getRecaptchaToken() {
+      try {
+        return await grecaptcha.execute(this.recaptchaSiteKey, {
+          action: 'submit_chat'
+        });
+      } catch (error) {
+        console.error("reCAPTCHA error:", error);
+        throw new Error("Failed to get reCAPTCHA token");
+      }
+    }
+
     async sendMessage(message) {
       if (!message.trim()) return;
-
       this.addMessage(message, false);
 
       try {
-        const token = await grecaptcha.execute(this.recaptchaSiteKey, {
-          action: 'submit_chat'
-        });
-
+        // Get the reCAPTCHA token right before sending the message
+        const token = await this.getRecaptchaToken();
+        
         const response = await fetch(this.apiUrl, {
           method: "POST",
           headers: {
